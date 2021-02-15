@@ -1,21 +1,10 @@
 const mongoose = require('mongoose')
 
-const connectionURL = 'mongodb://127.0.0.1:27017/task-manager-api'
 
-mongoose.connect(connectionURL, {
+console.log('Stablish connection')
+mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    usefindAndModify: false
 })
-
-
-const Task = mongoose.model('Task', {
-    description: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    }
-})
+console.log('Connection ok')

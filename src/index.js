@@ -1,25 +1,19 @@
 const express = require('express')
-
 require('./db/mongoose')
-const User = require('./models/user')
+
+const userRouter = require('./routers/user-router')
+const taskRouter = require('./routers/task-router')
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
-//Indica a express que use formato json
-app.use(express.json())  
-app.post('/users', (req, res) => {
-    console.log('Received: '+req.body)
-    const user = new User(req.body)
 
-    user.save().then( () => {
-        res.send(user)
-    }).catch(error => {
-        console.log("error", error.message)
-        res.send(error)
-    })
-})
+app.use(express.json())  // Points to Express to use a json format
+app.use(userRouter)  // Use the user endpoints
+app.use(taskRouter)
+
 
 app.listen(port, () => {
     console.log('Server is running on port ' + port)
 })
+
